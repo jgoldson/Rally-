@@ -9,7 +9,7 @@
 import Foundation
 
 struct K {
-    static let appName = "⚡FlashChat"
+    static let appName = "🏁Rally!"
     static let cellIdentifier = "ReusableCell"
     static let cellNibName = "MessageCell"
     static let registerSegue = "RegisterToChat"
@@ -27,5 +27,6 @@ struct K {
         static let senderField = "sender"
         static let bodyField = "body"
         static let dateField = "date"
+        static let scoreField = "score"
     }
 }

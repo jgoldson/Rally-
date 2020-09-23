@@ -7,14 +7,16 @@
 //
 
 import UIKit
+import Firebase
 
 class MessageCell: UITableViewCell {
 
     @IBOutlet weak var messageBubble: UIView!
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var rightImageView: UIImageView!
-    @IBOutlet weak var leftImageView: UIImageView!
+    @IBOutlet weak var scoreLabel: UILabel!
     
+    var score = 0
+    let db = Firestore.firestore()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,4 +29,20 @@ class MessageCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func upVote(_ sender: UIButton) {
+        score += 1
+        scoreLabel.text = String(score)
+        updateData()
+    }
+    @IBAction func downVote(_ sender: Any) {
+        score -= 1
+        scoreLabel.text = String(score)
+        updateData()
+        
+    }
+    
+    func updateData() {
+        db.collection(K.FStore.collectionName).doc(updateData(data:
+         [K.FStore.scoreField: score])
+    }
 }

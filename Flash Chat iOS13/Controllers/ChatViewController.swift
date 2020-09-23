@@ -34,7 +34,7 @@ class ChatViewController: UIViewController {
         
         
         db.collection(K.FStore.collectionName)
-            .order(by: K.FStore.dateField)
+            .order(by: K.FStore.scoreField)
             .addSnapshotListener() { (querySnapshot, error) in
             if let e = error {
                 print("There was an issue retrieving data from firestore. \(e)")
@@ -66,7 +66,8 @@ class ChatViewController: UIViewController {
             db.collection(K.FStore.collectionName).addDocument(data:
             [K.FStore.senderField : messageSender,
              K.FStore.bodyField : messageBody,
-             K.FStore.dateField : Date().timeIntervalSince1970
+             K.FStore.dateField : Date().timeIntervalSince1970,
+             K.FStore.scoreField: 0
             ]) { (error) in
                 if let e = error {
                     print("There was an issue saving data to firestore, \(e)")
@@ -80,9 +81,6 @@ class ChatViewController: UIViewController {
             }
             
         }
-        
-        
-        
     }
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
@@ -109,14 +107,12 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     cell.label.text = message.body
     
     if message.sender == Auth.auth().currentUser?.email {
-        cell.leftImageView.isHidden = true
-        cell.rightImageView.isHidden = false
+
         cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.lightPurple)
         cell.label.textColor = UIColor(named: K.BrandColors.purple)
     }
     else {
-        cell.leftImageView.isHidden = false
-        cell.rightImageView.isHidden = true
+
         cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.purple)
         cell.label.textColor = UIColor(named: K.BrandColors.lightPurple)
     }
