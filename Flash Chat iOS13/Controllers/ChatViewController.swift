@@ -33,8 +33,9 @@ class ChatViewController: UIViewController {
     func loadMessages() {
         
         
+        
         db.collection(K.FStore.collectionName)
-            .order(by: K.FStore.scoreField)
+            .order(by: K.FStore.scoreField, descending: true)
             .addSnapshotListener() { (querySnapshot, error) in
             if let e = error {
                 print("There was an issue retrieving data from firestore. \(e)")
@@ -43,8 +44,10 @@ class ChatViewController: UIViewController {
                     self.messages = []
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let messageSender = data[K.FStore.senderField] as? String, let messageBody = data[K.FStore.bodyField] as? String {
-                            let newMessage = Message(sender: messageSender, body: messageBody)
+                        if let messageSender = data[K.FStore.senderField] as? String, let messageBody = data[K.FStore.bodyField] as? String,
+                            let messageScore = data[K.FStore.scoreField] as? Int,
+                            let messageDoc = doc.documentID as? String{
+                            let newMessage = Message(sender: messageSender, body: messageBody, score: messageScore, id: messageDoc)
                             self.messages.append(newMessage)
                             
                             DispatchQueue.main.async {
@@ -79,7 +82,6 @@ class ChatViewController: UIViewController {
                     
                 }
             }
-            
         }
     }
     
@@ -91,10 +93,12 @@ class ChatViewController: UIViewController {
         } catch let signOutError as NSError {
           print ("Error signing out: %@", signOutError)
         }
-          
     }
     
+
 }
+
+
 
 extension ChatViewController: UITableViewDataSource {
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,16 +109,19 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
     let message = messages[indexPath.row]
     let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MessageCell
     cell.label.text = message.body
+    cell.docReferenceLabel.text = message.id
+    cell.scoreLabel.text = String(message.score)
+    
     
     if message.sender == Auth.auth().currentUser?.email {
 
-        cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.lightPurple)
-        cell.label.textColor = UIColor(named: K.BrandColors.purple)
+        cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.lightBlue)
+        cell.label.textColor = UIColor(named: K.BrandColors.blue)
     }
     else {
 
-        cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.purple)
-        cell.label.textColor = UIColor(named: K.BrandColors.lightPurple)
+        cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.blue)
+        cell.label.textColor = UIColor(named: K.BrandColors.lightBlue)
     }
     
     return cell

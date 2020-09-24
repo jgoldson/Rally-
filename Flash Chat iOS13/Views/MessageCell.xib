@@ -17,20 +17,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="343" height="70"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mko-Ix-bD5">
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mko-Ix-bD5">
                         <rect key="frame" x="10" y="10" width="323" height="50"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EDp-hh-b7F">
-                                <rect key="frame" x="0.0" y="0.0" width="253" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="233" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNT-8U-C8J">
-                                        <rect key="frame" x="10" y="10" width="233" height="30"/>
+                                        <rect key="frame" x="10" y="10" width="213" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="BrandLightPurple"/>
+                                        <color key="textColor" name="BrandBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" name="BrandPurple"/>
+                                <color key="backgroundColor" name="BrandLightBlue"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="pNT-8U-C8J" secondAttribute="bottom" constant="10" id="3Ot-73-Ijv"/>
                                     <constraint firstAttribute="trailing" secondItem="pNT-8U-C8J" secondAttribute="trailing" constant="10" id="Frd-pd-xMM"/>
@@ -39,32 +39,35 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ty0-cS-XkE" userLabel="ScoreLabel">
-                                <rect key="frame" x="263" y="0.0" width="30" height="40"/>
+                                <rect key="frame" x="253" y="0.0" width="50" height="40"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsM-rl-jXD">
-                                        <rect key="frame" x="10" y="9.5" width="10.5" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsM-rl-jXD">
+                                        <rect key="frame" x="10" y="9.5" width="39" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" updatesFrequently="YES"/>
+                                </accessibility>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="FPd-Dk-L1b"/>
                                     <constraint firstAttribute="height" constant="40" id="KLl-2q-3ma"/>
+                                    <constraint firstAttribute="width" constant="50" id="Vho-My-ng0"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" distribution="fillEqually" alignment="bottom" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hOa-ss-6o1">
                                 <rect key="frame" x="303" y="0.0" width="20" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rx3-gN-azG">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rx3-gN-azG">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="17.5"/>
                                         <state key="normal" title="Button" image="chevron.up.circle" catalog="system"/>
                                         <connections>
                                             <action selector="upVote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xeg-Zb-kUL"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbW-fs-ls9">
+                                    <button opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bbW-fs-ls9">
                                         <rect key="frame" x="0.0" y="22.5" width="20" height="17.5"/>
                                         <state key="normal" title="Button" image="chevron.down.circle" catalog="system"/>
                                         <connections>
@@ -82,6 +85,13 @@
                             <constraint firstItem="hOa-ss-6o1" firstAttribute="leading" secondItem="ty0-cS-XkE" secondAttribute="trailing" constant="10" id="OEF-Sf-PRw"/>
                         </constraints>
                     </stackView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKW-ae-97Y" userLabel="DocReference">
+                        <rect key="frame" x="150" y="55" width="42" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="mko-Ix-bD5" secondAttribute="trailing" constant="10" id="CoI-lz-bIw"/>
@@ -92,6 +102,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="docReferenceLabel" destination="ZKW-ae-97Y" id="z0z-Ac-GXW"/>
                 <outlet property="label" destination="pNT-8U-C8J" id="K6g-BF-9Qe"/>
                 <outlet property="messageBubble" destination="EDp-hh-b7F" id="pz3-jq-aQY"/>
                 <outlet property="scoreLabel" destination="rsM-rl-jXD" id="t3m-1g-b82"/>
@@ -102,11 +113,11 @@
     <resources>
         <image name="chevron.down.circle" catalog="system" width="128" height="121"/>
         <image name="chevron.up.circle" catalog="system" width="128" height="121"/>
-        <namedColor name="BrandLightPurple">
-            <color red="0.98000001907348633" green="0.9649999737739563" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="BrandBlue">
+            <color red="0.16500000655651093" green="0.77999997138977051" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="BrandPurple">
-            <color red="0.67500001192092896" green="0.43500000238418579" blue="0.9179999828338623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="BrandLightBlue">
+            <color red="0.92199999094009399" green="0.98000001907348633" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
