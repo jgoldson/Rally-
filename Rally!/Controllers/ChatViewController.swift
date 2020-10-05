@@ -186,6 +186,9 @@ extension ChatViewController: UITableViewDataSource, CellDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+            self.tableView.rowHeight = UITableView.automaticDimension;
+            self.tableView.estimatedRowHeight = 44.0;
+        
             let message = messages[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MessageCell
             cell.label.text = message.body
@@ -220,13 +223,18 @@ extension ChatViewController: UITableViewDataSource, CellDelegate {
         
         if message.sender == user.email {
             
-            cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.lightBlue)
-            cell.label.textColor = UIColor(named: K.BrandColors.blue)
+            cell.messageBubble.backgroundColor = UIColor.white
+            //cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.lightBlue)
+            //cell.label.textColor = UIColor(named: K.BrandColors.blue)
+            cell.label.textColor = UIColor.black
+            cell.messageBubble.backgroundColor = UIColor.white
         }
         else {
             
-            cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.blue)
-            cell.label.textColor = UIColor(named: K.BrandColors.lightBlue)
+            //cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.blue)
+            //cell.label.textColor = UIColor(named: K.BrandColors.lightBlue)
+            cell.messageBubble.backgroundColor = UIColor.white
+            cell.label.textColor = UIColor.black
         }
         }
         return cell
@@ -288,7 +296,7 @@ extension ChatViewController: CLLocationManagerDelegate {
 extension CLPlacemark {
     
     var compactAddress: String? {
-        if let name = name {
+        if name != nil {
             var result = ""
             
             if let street = thoroughfare {
