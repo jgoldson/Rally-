@@ -1,9 +1,5 @@
 //
 //  RegisterViewController.swift
-//  Flash Chat iOS13
-//
-//  Created by Angela Yu on 21/10/2019.
-//  Copyright © 2019 Angela Yu. All rights reserved.
 //
 
 import UIKit
@@ -13,6 +9,7 @@ class RegisterViewController: UIViewController {
 
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
+    @IBOutlet weak var errorMessage: UILabel!
     
     
     
@@ -22,11 +19,17 @@ class RegisterViewController: UIViewController {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let e = error {
                 print(e.localizedDescription)
+                self.errorMessage.isHidden = false
+                self.errorMessage.text = String(e.localizedDescription)
             } else {
+                self.errorMessage.isHidden = true
                 self.performSegue(withIdentifier: K.registerSegue, sender: self)
+                
             }
     
         }
     }
     }
 }
+
+

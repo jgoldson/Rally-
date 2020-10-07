@@ -1,9 +1,5 @@
 //
 //  ChatViewController.swift
-//  Flash Chat iOS13
-//
-//  Created by Angela Yu on 21/10/2019.
-//  Copyright © 2019 Angela Yu. All rights reserved.
 //
 
 import UIKit
@@ -16,7 +12,8 @@ import MapKit
 class ChatViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var messageTextfield: UITextField!
+    @IBOutlet weak var repLabel: UILabel!
+    
     
     let db = Firestore.firestore()
     
@@ -28,7 +25,7 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-   
+        repLabel.isHidden = true
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -88,6 +85,17 @@ class ChatViewController: UIViewController {
                                             let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
                                             self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
                                         }
+                                        if (diff.type == .modified) {
+                                            if messageScore <= -5 {
+                                                self.db.collection(self.civicModel.representative).document(messageDoc).delete() { err in
+                                                    if let err = err {
+                                                        print("Error removing document: \(err)")
+                                                    } else {
+                                                        print("Document successfully removed!")
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -96,32 +104,50 @@ class ChatViewController: UIViewController {
                 }
             }}
     
-    @IBAction func sendPressed(_ sender: UIButton) {
-        
-        
-        if let messageBody = messageTextfield.text, let messageSender = Auth.auth().currentUser?.email, let senderId = Auth.auth().currentUser?.uid  {
-            db.collection(civicModel.representative).addDocument(data:
-                                                                    [K.FStore.senderField : messageSender,
-                                                                     K.FStore.bodyField : messageBody,
-                                                                     K.FStore.dateField : Date().timeIntervalSince1970,
-                                                                     K.FStore.scoreField: 1,
-                                                                     K.FStore.repField: civicModel.representative,
-                                                                     K.FStore.upSelected: [senderId : true],
-                                                                     K.FStore.downSelected: [senderId : false]
-                                                                    ]) { (error) in
-                if let e = error {
-                    print("There was an issue saving data to firestore, \(e)")
-                } else {
-                    print("Success")
-                    DispatchQueue.main.async {
-                        self.messageTextfield.text = ""
+    
+    @IBAction func AddItemPressed(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "What do you want your \n representative to work on? \n", message: "\n\n\n\n\n", preferredStyle: .alert)
+        alert.view.autoresizesSubviews = true
+
+        let textView = UITextView(frame: CGRect.zero)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+
+        let leadConstraint = NSLayoutConstraint(item: alert.view, attribute: .leading, relatedBy: .equal, toItem: textView, attribute: .leading, multiplier: 1.0, constant: -8.0)
+        let trailConstraint = NSLayoutConstraint(item: alert.view, attribute: .trailing, relatedBy: .equal, toItem: textView, attribute: .trailing, multiplier: 1.0, constant: 8.0)
+
+        let topConstraint = NSLayoutConstraint(item: alert.view, attribute: .top, relatedBy: .equal, toItem: textView, attribute: .top, multiplier: 1.0, constant: -64.0)
+        let bottomConstraint = NSLayoutConstraint(item: alert.view, attribute: .bottom, relatedBy: .equal, toItem: textView, attribute: .bottom, multiplier: 1.0, constant: 64.0)
+        alert.view.addSubview(textView)
+        NSLayoutConstraint.activate([leadConstraint, trailConstraint, topConstraint, bottomConstraint])
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { action in
+            print("Cancelling out of add idea")
+        }))
+        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
+            print("\(String(describing: textView.text))")
+            if let messageBody = textView.text, let messageSender = Auth.auth().currentUser?.email, let senderId = Auth.auth().currentUser?.uid  {
+                self.db.collection(self.civicModel.representative).addDocument(data:
+                                                                        [K.FStore.senderField : messageSender,
+                                                                         K.FStore.bodyField : messageBody,
+                                                                         K.FStore.dateField : Date().timeIntervalSince1970,
+                                                                         K.FStore.scoreField: 1,
+                                                                         K.FStore.repField: self.civicModel.representative,
+                                                                         K.FStore.upSelected: [senderId : true],
+                                                                         K.FStore.downSelected: [senderId : false]
+                                                                        ]) { (error) in
+                    if let e = error {
+                        print("There was an issue saving data to firestore, \(e)")
+                    } else {
+                        print("Success")
+                        
                     }
-                    
                 }
             }
-        }
+        }))
+        present(alert, animated: true)
+            
+
+            
     }
-    
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
         let firebaseAuth = Auth.auth()
         do {
@@ -135,7 +161,7 @@ class ChatViewController: UIViewController {
     
 }
 
-
+//MARK - TableView Extension
 
 extension ChatViewController: UITableViewDataSource, CellDelegate {
     func didTapButton(cell: MessageCell, button: Int) {
@@ -146,25 +172,31 @@ extension ChatViewController: UITableViewDataSource, CellDelegate {
             let ref = db.collection(rep).document(docId)
             if let indexPath = tableView.indexPath(for: cell) {
                 if button == 1 {
-                    if cell.downButton.isEnabled == false {
-                        points = 2
-                    } else { points = 1 }
-                    ref.updateData(["\(K.FStore.upSelected).\(user)": true])
-                    ref.updateData(["\(K.FStore.downSelected).\(user)": false])
-                    cell.upButton.isEnabled = false
-                    cell.downButton.isEnabled = true
+                    if cell.upButton.isSelected == true {
+                        points = -1
+                        cell.upButton.isSelected = false
+                        ref.updateData(["\(K.FStore.upSelected).\(user)": false])
+                    } else if cell.downButton.isSelected == false {
+                        points = 1
+                        ref.updateData(["\(K.FStore.upSelected).\(user)": true])
+                        cell.upButton.isSelected = true
+                    }
                 }
 
              else if button == 0 {
-                if cell.upButton.isEnabled == false {
-                    points = -2
-                } else { points = -1 }
-                ref.updateData(["\(K.FStore.downSelected).\(user)": true])
-                ref.updateData(["\(K.FStore.upSelected).\(user)": false])
-                cell.upButton.isEnabled = true
-                cell.downButton.isEnabled = false
+                if cell.downButton.isSelected == true {
+                    points = 1
+                    cell.downButton.isSelected = false
+                    ref.updateData(["\(K.FStore.downSelected).\(user)": false])
+                } else if cell.upButton.isSelected == false {
+                    points = -1
+                    ref.updateData(["\(K.FStore.downSelected).\(user)": true])
+                    cell.downButton.isSelected = true
+                }
             }
-            ref.updateData(["score" : FieldValue.increment(Int64(points))])
+                ref.updateData([K.FStore.scoreField : FieldValue.increment(Int64(points))])
+                
+       
         }
     }
     }
@@ -202,20 +234,24 @@ extension ChatViewController: UITableViewDataSource, CellDelegate {
             
             switch message.upSelected[userId]{
             case true:
-                cell.upButton.isEnabled = false
+                cell.upButton.isSelected = true
+                cell.upButton.tintColor = UIColor.systemBlue
             case false:
-                cell.upButton.isEnabled = true
+                cell.upButton.isSelected = false
+                cell.upButton.tintColor = UIColor.lightGray
             default:
-                cell.upButton.isEnabled = true
+                cell.upButton.isSelected = false
             }
             
             switch message.downSelected[userId] {
             case true:
-                cell.downButton.isEnabled = false
+                cell.downButton.isSelected = true
+                cell.downButton.tintColor = UIColor.systemBlue
             case false:
-                cell.downButton.isEnabled = true
+                cell.downButton.isSelected = false
+                cell.downButton.tintColor = UIColor.lightGray
             default :
-                cell.downButton.isEnabled = true
+                cell.downButton.isSelected = false
             }
             
         
@@ -271,6 +307,13 @@ extension ChatViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to obtain location")
+        let alert = UIAlertController(title: "Failed to obtain location", message: "The application was unable to obtain your current location, please check your permission settings under Settings -> Privacy -> Location Services", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: { action in self.locationManager.requestLocation()
+        }))
+        
+
+        self.present(alert, animated: true)
     }
     func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) -> String? {
         
@@ -333,6 +376,8 @@ extension ChatViewController: ApiManagerDelegate {
         DispatchQueue.main.async{
             self.civicModel.representative = civic.representative
             self.loadMessages()
+            self.repLabel.text = "Representative: \(self.civicModel.representative)"
+            self.repLabel.isHidden = false
             print("Inside chatviewcontroller, rep is \(self.civicModel.representative)")
         }
     }
