@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>RepresentU</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,6 +26,11 @@
 	<string>This app wants to use your location for locating the correcting representative district</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app wants to use your location for locating the correcting representative district</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ProximaNova-Regular.otf</string>
+		<string>Proxima Nova Alt Regular.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

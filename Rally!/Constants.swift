@@ -9,7 +9,7 @@
 import Foundation
 
 struct K {
-    static let appName = "🏁Rally!"
+    static let appName = "📢RepresentU"
     static let cellIdentifier = "ReusableCell"
     static let cellNibName = "MessageCell"
     static let registerSegue = "RegisterToChat"

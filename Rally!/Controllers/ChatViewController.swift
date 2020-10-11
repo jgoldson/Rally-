@@ -9,7 +9,7 @@ import MapKit
 
 
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var repLabel: UILabel!
@@ -22,10 +22,17 @@ class ChatViewController: UIViewController {
     var messages: [Message] = []
     var civicModel = CivicModel(representative: K.FStore.collectionName)
     
+    override func viewWillAppear(_ animated: Bool) {
+        activityIndicator()
+        indicator.startAnimating()
+        indicator.backgroundColor = .white
+        repLabel.text = "Refreshing Data..."
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        repLabel.isHidden = true
+        //repLabel.isHidden = true
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -43,6 +50,15 @@ class ChatViewController: UIViewController {
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
         
         
+        
+    }
+    var indicator = UIActivityIndicatorView()
+
+    func activityIndicator() {
+        indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        indicator.style = UIActivityIndicatorView.Style.large
+        indicator.center = self.view.center
+        self.view.addSubview(indicator)
     }
     
     func loadMessages() {
@@ -106,11 +122,17 @@ class ChatViewController: UIViewController {
     
     
     @IBAction func AddItemPressed(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "What do you want your \n representative to work on? \n", message: "\n\n\n\n\n", preferredStyle: .alert)
-        alert.view.autoresizesSubviews = true
 
+        let alert = UIAlertController(title: "What do you want your \n representative to work on? \n", message: "\n\n\n", preferredStyle: .alert)
+        alert.view.autoresizesSubviews = true
+//        let tap = UITapGestureRecognizer(target: view, action: #selector(view.endEditing))
+ //       alert.view.addGestureRecognizer(tap)
+    
         let textView = UITextView(frame: CGRect.zero)
         textView.translatesAutoresizingMaskIntoConstraints = false
+        if UIScreen.main.nativeBounds.height < 1792 {
+            textView.autocorrectionType = .no
+        }
 
         let leadConstraint = NSLayoutConstraint(item: alert.view, attribute: .leading, relatedBy: .equal, toItem: textView, attribute: .leading, multiplier: 1.0, constant: -8.0)
         let trailConstraint = NSLayoutConstraint(item: alert.view, attribute: .trailing, relatedBy: .equal, toItem: textView, attribute: .trailing, multiplier: 1.0, constant: 8.0)
@@ -119,11 +141,15 @@ class ChatViewController: UIViewController {
         let bottomConstraint = NSLayoutConstraint(item: alert.view, attribute: .bottom, relatedBy: .equal, toItem: textView, attribute: .bottom, multiplier: 1.0, constant: 64.0)
         alert.view.addSubview(textView)
         NSLayoutConstraint.activate([leadConstraint, trailConstraint, topConstraint, bottomConstraint])
+        
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { action in
             print("Cancelling out of add idea")
         }))
         alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             print("\(String(describing: textView.text))")
+            print(textView.text!.count)
+            if textView.text!.count > 0 {
             if let messageBody = textView.text, let messageSender = Auth.auth().currentUser?.email, let senderId = Auth.auth().currentUser?.uid  {
                 self.db.collection(self.civicModel.representative).addDocument(data:
                                                                         [K.FStore.senderField : messageSender,
@@ -141,6 +167,7 @@ class ChatViewController: UIViewController {
                         
                     }
                 }
+            }
             }
         }))
         present(alert, animated: true)
@@ -262,7 +289,7 @@ extension ChatViewController: UITableViewDataSource, CellDelegate {
             cell.messageBubble.backgroundColor = UIColor.white
             //cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.lightBlue)
             //cell.label.textColor = UIColor(named: K.BrandColors.blue)
-            cell.label.textColor = UIColor.black
+            //cell.label.textColor = UIColor.black
             cell.messageBubble.backgroundColor = UIColor.white
         }
         else {
@@ -270,7 +297,7 @@ extension ChatViewController: UITableViewDataSource, CellDelegate {
             //cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.blue)
             //cell.label.textColor = UIColor(named: K.BrandColors.lightBlue)
             cell.messageBubble.backgroundColor = UIColor.white
-            cell.label.textColor = UIColor.black
+            //cell.label.textColor = UIColor.black
         }
         }
         return cell
@@ -379,12 +406,18 @@ extension ChatViewController: ApiManagerDelegate {
             self.repLabel.text = "Representative: \(self.civicModel.representative)"
             self.repLabel.isHidden = false
             print("Inside chatviewcontroller, rep is \(self.civicModel.representative)")
+            self.indicator.stopAnimating()
+            self.indicator.hidesWhenStopped = true
         }
     }
     func didFailWithError(error: Error) {
         print(error)
     }
 }
+
+
+
+
 
 
 

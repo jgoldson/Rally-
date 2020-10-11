@@ -21,8 +21,11 @@
 		F672D9B725125EC000A8D1AC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F672D9B625125EC000A8D1AC /* Message.swift */; };
 		F672D9BA2512641100A8D1AC /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F672D9B82512641100A8D1AC /* MessageCell.swift */; };
 		F672D9BB2512641100A8D1AC /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F672D9B92512641100A8D1AC /* MessageCell.xib */; };
-		F672D9BE2514265700A8D1AC /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F672D9BD2514265700A8D1AC /* SwiftPackageProductDependency */; };
+		F672D9BE2514265700A8D1AC /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F672D9BD2514265700A8D1AC /* IQKeyboardManagerSwift */; };
 		F6878300252B5B0E00EFBFDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F68782FF252B5B0E00EFBFDE /* GoogleService-Info.plist */; };
+		F687832C252E082B00EFBFDE /* Proxima Nova Alt Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F687832A252E082900EFBFDE /* Proxima Nova Alt Regular.otf */; };
+		F687832D252E082B00EFBFDE /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F687832B252E082A00EFBFDE /* ProximaNova-Regular.otf */; };
+		F6878330252F647800EFBFDE /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F687832F252F647700EFBFDE /* UITextField+Extensions.swift */; };
 		F6F406A9251EB82200EA22B6 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F406A8251EB82200EA22B6 /* ApiManager.swift */; };
 		F6F406AB251EB86300EA22B6 /* CivicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F406AA251EB86300EA22B6 /* CivicModel.swift */; };
 		F6F406AD251ED44400EA22B6 /* CivicData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F406AC251ED44400EA22B6 /* CivicData.swift */; };
@@ -48,6 +51,9 @@
 		F672D9B82512641100A8D1AC /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		F672D9B92512641100A8D1AC /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 		F68782FF252B5B0E00EFBFDE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		F687832A252E082900EFBFDE /* Proxima Nova Alt Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Alt Regular.otf"; sourceTree = "<group>"; };
+		F687832B252E082A00EFBFDE /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.otf"; sourceTree = "<group>"; };
+		F687832F252F647700EFBFDE /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		F6F406A8251EB82200EA22B6 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		F6F406AA251EB86300EA22B6 /* CivicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CivicModel.swift; path = "Rally!/Models/CivicModel.swift"; sourceTree = SOURCE_ROOT; };
 		F6F406AC251ED44400EA22B6 /* CivicData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CivicData.swift; path = "Rally!/Models/CivicData.swift"; sourceTree = SOURCE_ROOT; };
@@ -58,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F672D9BE2514265700A8D1AC /* BuildFile in Frameworks */,
+				F672D9BE2514265700A8D1AC /* IQKeyboardManagerSwift in Frameworks */,
 				4111004DC70B70FF2089891A /* Pods_Rally_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,6 +103,7 @@
 				0B628181235DEE8400E35CAF /* LaunchScreen.storyboard */,
 				0B628184235DEE8400E35CAF /* Info.plist */,
 				F672D9B425125BCF00A8D1AC /* Constants.swift */,
+				F6878327252E07D500EFBFDE /* Fonts */,
 			);
 			path = "Rally!";
 			sourceTree = "<group>";
@@ -109,6 +116,7 @@
 				0B62818E235DF01000E35CAF /* LoginViewController.swift */,
 				0B628190235DF01B00E35CAF /* ChatViewController.swift */,
 				F6F406A8251EB82200EA22B6 /* ApiManager.swift */,
+				F687832F252F647700EFBFDE /* UITextField+Extensions.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -151,6 +159,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F6878327252E07D500EFBFDE /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F687832A252E082900EFBFDE /* Proxima Nova Alt Regular.otf */,
+				F687832B252E082A00EFBFDE /* ProximaNova-Regular.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -170,7 +187,7 @@
 			);
 			name = "Rally!";
 			packageProductDependencies = (
-				F672D9BD2514265700A8D1AC /* SwiftPackageProductDependency */,
+				F672D9BD2514265700A8D1AC /* IQKeyboardManagerSwift */,
 			);
 			productName = "Flash Chat iOS13";
 			productReference = 0B628173235DEE8100E35CAF /* Rally!.app */;
@@ -201,7 +218,7 @@
 			);
 			mainGroup = 0B62816A235DEE8100E35CAF;
 			packageReferences = (
-				F672D9BC2514265700A8D1AC /* RemoteSwiftPackageReference */,
+				F672D9BC2514265700A8D1AC /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 0B628174235DEE8100E35CAF /* Products */;
 			projectDirPath = "";
@@ -218,7 +235,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B628183235DEE8400E35CAF /* LaunchScreen.storyboard in Resources */,
+				F687832D252E082B00EFBFDE /* ProximaNova-Regular.otf in Resources */,
 				F672D9BB2512641100A8D1AC /* MessageCell.xib in Resources */,
+				F687832C252E082B00EFBFDE /* Proxima Nova Alt Regular.otf in Resources */,
 				F6878300252B5B0E00EFBFDE /* GoogleService-Info.plist in Resources */,
 				0B628180235DEE8400E35CAF /* Assets.xcassets in Resources */,
 				0B62817E235DEE8100E35CAF /* Main.storyboard in Resources */,
@@ -274,6 +293,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6878330252F647800EFBFDE /* UITextField+Extensions.swift in Sources */,
 				F6F406A9251EB82200EA22B6 /* ApiManager.swift in Sources */,
 				0B62818B235DF00000E35CAF /* WelcomeViewController.swift in Sources */,
 				F6F406AD251ED44400EA22B6 /* CivicData.swift in Sources */,
@@ -442,7 +462,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "app.netlify.jongoldson.rally-";
 				PRODUCT_NAME = "Rally!";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -461,7 +481,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "app.netlify.jongoldson.rally-";
 				PRODUCT_NAME = "Rally!";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -489,7 +509,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F672D9BC2514265700A8D1AC /* RemoteSwiftPackageReference */ = {
+		F672D9BC2514265700A8D1AC /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
 			requirement = {
@@ -500,9 +520,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F672D9BD2514265700A8D1AC /* SwiftPackageProductDependency */ = {
+		F672D9BD2514265700A8D1AC /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F672D9BC2514265700A8D1AC /* RemoteSwiftPackageReference */;
+			package = F672D9BC2514265700A8D1AC /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
